@@ -11,11 +11,7 @@ const about = require('./routes/about');
 const userLogin = require('./routes/userLogin');
 const userProfile = require('./routes/userProfile');
 const userPlaylists = require('./routes/userPlaylists'); 
-const userHistory = require('./routes/userHistory');
 const userFavorites = require('./routes/userFavorites');
-const mostPopularVideos = require('./routes/mostPopularVideos');
-const mostLikedVideos = require('./routes/mostLikedVideos');
-
 
 var app = express();
 
@@ -37,10 +33,9 @@ app.use('/about', about);
 app.use('/userLogin', userLogin);
 app.use('/userProfile', userProfile);
 app.use('/userPlaylists', userPlaylists);
-app.use('/userHistory', userHistory);
 app.use('/userFavorites', userFavorites);
-app.use('/mostPopularVideos', mostPopularVideos);
-app.use('/mostLikedVideos', mostLikedVideos);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
