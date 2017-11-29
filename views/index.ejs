@@ -10,10 +10,17 @@
   <% include partial_Navbar.ejs %>
   <div class="jumbotron jumbotron-fluid" id="jumboimage">
     <div class="container">
-
       <h1 class="display-3">deadranker</h1>
-      <p class="lead">Find the best lo-fi hiphop streams on Youtube.</p>
-      <a class="btn btn-primary btn-lg" href="#" role="button">Add Stream</a>
+      <br>
+      <% if (!user) { %>
+        <a class="btn btn-primary btn-sm" href="#" role="button">Login</a>
+
+        <a class="btn btn-primary btn-sm" href="#" role="button">Sign Up</a>
+      <% } %>
+      <% if (user) { %>
+        <p>Welcome back {user.username}</p>
+        <a class="btn btn-primary btn-md" href="#" role="button">Add Stream</a>
+      <% } %>
       </p>
     </div>
   </div>
