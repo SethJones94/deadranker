@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET about page. */
 
 router.get('/', function(req, res, next){
-	res.send('working about');
+	res.render('about', {title: 'Deadranker'});
 });
 
 module.exports = router;
