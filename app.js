@@ -1,58 +1,76 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const localMongoose = require('passport-local-mongoose');
 
-const index = require('./routes/index');
 const users = require('./routes/users');
+const index = require('./routes/index');
 const about = require('./routes/about');
 const userLogin = require('./routes/userLogin');
 const userProfile = require('./routes/userProfile');
-const userPlaylists = require('./routes/userPlaylists'); 
-const userFavorites = require('./routes/userFavorites');
+const signup = require('./routes/signup');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// passport
+const Account = require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+// mongoose
+mongoose.connect('mongodb://localhost/deadranker');
+
 app.use('/', index);
-app.use('/users', users);
 app.use('/about', about);
+app.use('/users', users);
 app.use('/userLogin', userLogin);
 app.use('/userProfile', userProfile);
-app.use('/userPlaylists', userPlaylists);
-app.use('/userFavorites', userFavorites);
+app.use('/signup', signup);
 
-
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+// catch and forward
+app.use(function (req, res, next) {
+const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {
+    message: err.message,
+    error: err
+  });
+  });
+}
+
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+   });
 });
 
 module.exports = app;

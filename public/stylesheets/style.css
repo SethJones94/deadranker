@@ -1,8 +1,18 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 62.5%;
+}
+#navbar-brand-logo {
+  height: 10%;
+  width: 10%;
 }
 
-a {
-  color: #00B7FF;
+#jumboimage {
+  background-image: url("https://78.media.tumblr.com/8f42cce8b8b07a7aecb6fc2b60b6110a/tumblr_p065doTUZr1wy56f5o1_1280.jpg");
+  background-size: cover;
+}
+
+.display-3 {
+  color: white;
+  font-size: 3.6em;
+  lettEr-spacing:
 }
