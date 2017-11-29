@@ -10,14 +10,13 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const localMongoose = require('passport-local-mongoose');
 
+const app = express();
 const users = require('./routes/users');
 const index = require('./routes/index');
 const about = require('./routes/about');
 const userLogin = require('./routes/userLogin');
 const userProfile = require('./routes/userProfile');
 const signup = require('./routes/signup');
-
-const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
