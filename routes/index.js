@@ -24,7 +24,7 @@ router.post('/register', function(req, res) {
 });
 
 router.get('/login', function(req, res) {
-  res.render('login', { user: req.user });
+  res.render('login', {user: req.user});
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
@@ -32,7 +32,7 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 })
 
 router.get('/logout', function(req, res) {
-  res.logout();
+  req.logout();
   res.redirect('/');
 });
 
