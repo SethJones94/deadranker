@@ -18,13 +18,18 @@ router.post('/register', function(req, res) {
       return res.render('register', {account: account});
     }
     passport.authenticate('local')(req, res, function () {
-      res.redirect('/');
+      req.session.save(function (err){
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/');
+      });
     });
   });
 });
 
 router.get('/login', function(req, res) {
-  res.render('login', { user: req.user });
+  res.render('login', {user: req.user});
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
@@ -32,7 +37,7 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 })
 
 router.get('/logout', function(req, res) {
-  res.logout();
+  req.logout();
   res.redirect('/');
 });
 
