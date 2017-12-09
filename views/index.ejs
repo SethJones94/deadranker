@@ -10,16 +10,27 @@
   <% include partial_Navbar.ejs %>
   <div class="jumbotron jumbotron-fluid" id="jumboimage">
     <div class="container">
-      <h1 class="display-3">Deadranker <br> music to study to</h1>
-      <br>
       <% if (!user) { %>
+        <h1 class="display-3">Deadranker <br> music to study to</h1>
+        <br>
         <a class="btn btn-primary btn-sm" href="login" role="button">Login</a>
 
         <a class="btn btn-primary btn-sm" href="register" role="button">Sign Up</a>
       <% } %>
       <% if (user) { %>
-        <h1 class="display-3">Welcome back <% user %> <h1>
-        <a class="btn btn-primary btn-md" href="#" role="button">Add Stream</a>
+      <h1 class="display-3">Welcome back <% user %> <h1>
+      <br>
+      <form class="form-inline">
+        <label class="sr-only" for="inlineFormInput">Name</label>
+        <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Search Youtube..">
+        <label class="sr-only" for="inlineFormInputGroup">Username</label>
+      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+      <div class="input-group-addon">Tags</div>
+        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="example: #lofi">
+      </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Add music</button>
+      </form>
       <% } %>
       </p>
     </div>
