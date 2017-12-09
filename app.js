@@ -11,6 +11,10 @@ const LocalStrategy = require('passport-local').Strategy;
 const localMongoose = require('passport-local-mongoose');
 const config = require('./config/database');
 const flash = require('connect-flash');
+const fs = require('fs');
+const readline = require('readline');
+const google = require('googleapis');
+const googleAuth = require('google-auth-library');
 
 const app = express();
 const users = require('./routes/users');
