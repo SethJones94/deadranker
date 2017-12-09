@@ -1,11 +1,17 @@
 const express = require('express');
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy
 const Account = require('../models/account');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+
+const isLoggedIn = (req, res, next) => {
+  return req.isAuthenticated();
+};
+
 
 // Home page
 router.get('/', function(req, res, next) {
+  res.locals.user = req.user;
   res.render('index', {user: req.user});
 });
 

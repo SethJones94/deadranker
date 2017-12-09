@@ -9,15 +9,12 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const localMongoose = require('passport-local-mongoose');
+const config = require('./config/database');
 const flash = require('connect-flash');
 
 const app = express();
 const users = require('./routes/users');
 const index = require('./routes/index', passport);
-const about = require('./routes/about');
-const userLogin = require('./routes/userLogin');
-const userProfile = require('./routes/userProfile');
-const signup = require('./routes/signup');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,7 +28,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
   secret: 'largeelephantinasmallroom',
-  cookie: { maxAge: null }}));
+  cookie: { maxAge: null },
+  resave: false,
+  saveUninitialized: false
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -45,10 +45,13 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-mongoose.connect('mongodb://localhost/deadranker');
+mongoose.connect('mongodb://localhost/deadranker', {useMongoClient: true});
+mongoose.Promise = global.Promise;
 
-
-
+app.use(function(req, res, next) {
+  res.locals.Account = req.session.Account;
+  next();
+});
 // catch and forward
 app.use(function (req, res, next) {
 const err = new Error('Not Found');

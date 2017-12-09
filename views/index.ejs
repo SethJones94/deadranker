@@ -18,7 +18,7 @@
         <a class="btn btn-primary btn-sm" href="register" role="button">Sign Up</a>
       <% } %>
       <% if (user) { %>
-      <h1 class="display-3">Welcome back <% user %> <h1>
+      <h1 class="display-3">Welcome back <%= user.username %> <h1>
       <br>
       <form class="form-inline">
         <label class="sr-only" for="inlineFormInput">Name</label>

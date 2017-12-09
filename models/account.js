@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt-nodejs');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
+// user schema
 const Account = new Schema({
   username: {
 	  type: String,
