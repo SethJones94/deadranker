@@ -1,10 +1,20 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt-nodejs');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 
 const Account = new Schema({
-  username: String,
-  password: String
+  username: {
+	  type: String,
+		required: true,
+	  trim: true,
+		unique: true
+	},
+	password: {
+		type: String,
+		required: true,
+		trim: true
+	}
 });
 
 Account.plugin(passportLocalMongoose);
