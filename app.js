@@ -9,10 +9,11 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const localMongoose = require('passport-local-mongoose');
+const flash = require('connect-flash');
 
 const app = express();
 const users = require('./routes/users');
-const index = require('./routes/index');
+const index = require('./routes/index', passport);
 const about = require('./routes/about');
 const userLogin = require('./routes/userLogin');
 const userProfile = require('./routes/userProfile');
@@ -28,7 +29,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: 'largeelephantinasmallroom',
+  cookie: { maxAge: null }}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', index);
 
 // passport
 const Account = require('./models/account');
@@ -39,12 +47,7 @@ passport.deserializeUser(Account.deserializeUser());
 // mongoose
 mongoose.connect('mongodb://localhost/deadranker');
 
-app.use('/', index);
-app.use('/about', about);
-app.use('/users', users);
-app.use('/userLogin', userLogin);
-app.use('/userProfile', userProfile);
-app.use('/signup', signup);
+
 
 // catch and forward
 app.use(function (req, res, next) {

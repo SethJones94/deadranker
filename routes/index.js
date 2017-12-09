@@ -1,40 +1,44 @@
 const express = require('express');
 const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy
 const Account = require('../models/account');
 const router = express.Router();
 
-/* GET home page. */
+// Home page
 router.get('/', function(req, res, next) {
   res.render('index', {user: req.user});
 });
 
-/* GET register page */
+// Register page
 router.get('/register', function(req, res) {
   res.render('register', { });
 });
 
-/* POST register */
+// User register
 router.post('/register', function(req, res) {
   Account.register(new Account({username: req.body.username}), req.body.password, function(err, account) {
     if (err) {
       return res.render('register', {account: account});
     }
-/* passport local auth */
+// Passport local auth
     passport.authenticate('local')(req, res, function () {
       res.redirect('/');
     });
   });
 });
 
-/* GET login page */
+// Login page
 router.get('/login', function(req, res) {
   res.render('login', { user: req.user });
 });
-/* POST login */
-router.post('/login', passport.authenticate('local'), function(req, res) {
-  res.redirect('/');
+// User login
+router.post('/login', passport.authenticate('local',  {
+  successRedirect: '/',
+  failureRedirect: '/'
 })
+);
 
+// Logout
 router.get('/logout', function(req, res) {
   res.logout();
   res.redirect('/');
