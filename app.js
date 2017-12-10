@@ -9,16 +9,12 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const localMongoose = require('passport-local-mongoose');
-const config = require('./config/database');
 const flash = require('connect-flash');
-const fs = require('fs');
-const readline = require('readline');
-const google = require('googleapis');
-const googleAuth = require('google-auth-library');
 
 const app = express();
 const users = require('./routes/users');
 const index = require('./routes/index', passport);
+const about = require('./routes/about');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -53,7 +49,7 @@ mongoose.connect('mongodb://localhost/deadranker', {useMongoClient: true});
 mongoose.Promise = global.Promise;
 
 app.use(function(req, res, next) {
-  res.locals.Account = req.session.Account;
+  res.locals.account = req.session.user;
   next();
 });
 // catch and forward

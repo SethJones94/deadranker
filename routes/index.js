@@ -2,16 +2,10 @@ const express = require('express');
 const passport = require('passport');
 const Account = require('../models/account');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-
-const isLoggedIn = (req, res, next) => {
-  return req.isAuthenticated();
-};
 
 
 // Home page
 router.get('/', function(req, res, next) {
-  res.locals.user = req.user;
   res.render('index', {user: req.user});
 });
 
@@ -28,7 +22,12 @@ router.post('/register', function(req, res) {
     }
 // Passport local auth
     passport.authenticate('local')(req, res, function () {
-      res.redirect('/');
+      req.session.save(function(err) {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/');
+      });
     });
   });
 });
