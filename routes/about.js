@@ -1,10 +1,10 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
 /* GET about page. */
 
-router.get('/', function(req, res, next){
-	res.render('about', {title: 'Deadranker'});
+router.get("/", function(req, res, next) {
+  res.render("about", { title: "Deadranker" });
 });
 
 module.exports = router;
