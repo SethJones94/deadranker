@@ -12,9 +12,7 @@ const localMongoose = require("passport-local-mongoose");
 const flash = require("connect-flash");
 
 const app = express();
-const users = require("./routes/users");
 const index = require("./routes/index", passport);
-const about = require("./routes/about");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
