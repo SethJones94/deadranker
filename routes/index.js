@@ -2,60 +2,27 @@ const express = require("express");
 const passport = require("passport");
 const Account = require("../models/account");
 const router = express.Router();
+const indexController = require("../controllers/indexController");
+const registerController = require("../controllers/registerController");
+const loginController = require("../controllers/loginController");
 
-// Home page
-router.get("/", function(req, res, next) {
-  res.render("index", { user: req.user });
-});
+// Home page GET
+router.get("/", indexController.indexPageGET);
 
-// Register page
-router.get("/register", function(req, res) {
-  res.render("register", {});
-});
-
+// Register page GET
+router.get("/register", registerController.registerPageGET);
 // User register
-router.post("/register", function(req, res) {
-  Account.register(
-    new Account({ username: req.body.username }),
-    req.body.password,
-    function(err, account) {
-      if (err) {
-        return res.render("register", { account: account });
-      }
-      // Passport local auth
-      passport.authenticate("local")(req, res, function() {
-        req.session.save(function(err) {
-          if (err) {
-            return next(err);
-          }
-          res.redirect("/");
-        });
-      });
-    }
-  );
-});
-
+router.post("/register", registerController.userRegisterPOST);
 // Login page
-router.get("/login", function(req, res) {
-  res.render("login", { user: req.user });
-});
+router.get("/login", loginController.loginPageGET);
 // User login
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/"
-  })
-);
+router.post("/login", loginController.loginAuthenticate);
 
-// Logout
+/* Logout - To do
 router.get("/logout", function(req, res) {
   res.logout();
   res.redirect("/");
 });
-
-router.get("/gotit", function(req, res) {
-  res.status(200).send("gotcha");
-});
+*/
 
 module.exports = router;
