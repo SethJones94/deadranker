@@ -29,6 +29,7 @@
     "passport-local-mongoose": "^4.4.0",
     "passport-youtube-v3": "^2.1.0",
     "serve-favicon": "~2.4.5",
+    "slug": "^0.9.1",
     "webpack": "^3.8.1"
   }
 }
