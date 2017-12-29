@@ -48,6 +48,9 @@ passport.deserializeUser(Account.deserializeUser());
 mongoose.connect("mongodb://localhost/deadranker", { useMongoClient: true });
 mongoose.Promise = global.Promise;
 
+//models
+require("./models/video.js");
+
 app.use(function(req, res, next) {
   res.locals.account = req.session.user;
   next();
