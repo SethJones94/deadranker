@@ -5,10 +5,10 @@ const router = express.Router();
 const indexController = require("../controllers/indexController");
 const registerController = require("../controllers/registerController");
 const loginController = require("../controllers/loginController");
+const addVideoController = require("../controllers/addVideoController");
 
 // Home page GET
 router.get("/", indexController.indexPageGET);
-
 // Register page GET
 router.get("/register", registerController.registerPageGET);
 // User register
@@ -17,7 +17,8 @@ router.post("/register", registerController.userRegisterPOST);
 router.get("/login", loginController.loginPageGET);
 // User login
 router.post("/login", loginController.loginAuthenticate);
-
+// Add Video Page GET
+router.get("/add", addVideoController.addPageGET);
 /* Logout - To do
 router.get("/logout", function(req, res) {
   res.logout();

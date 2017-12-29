@@ -16,4 +16,15 @@ const videoSchema = new mongoose.Schema({
   tags: [String]
 });
 
+videoSchema.pre("save", function(next) {
+  //only runs if name is modified
+  if (!this.isModified("name")) {
+    next();
+    return;
+  }
+  this.slug = slug(this.name);
+  next();
+
+  //Make unique slugs - todo
+});
 module.exports = mongoose.model("Video", videoSchema);
