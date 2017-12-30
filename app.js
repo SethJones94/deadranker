@@ -10,8 +10,11 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const localMongoose = require("passport-local-mongoose");
 const flash = require("connect-flash");
-
 const app = express();
+
+//models
+require("./models/video.js");
+
 const index = require("./routes/index", passport);
 
 // view engine setup
@@ -47,9 +50,6 @@ passport.deserializeUser(Account.deserializeUser());
 // mongoose
 mongoose.connect("mongodb://localhost/deadranker", { useMongoClient: true });
 mongoose.Promise = global.Promise;
-
-//models
-require("./models/video.js");
 
 app.use(function(req, res, next) {
   res.locals.account = req.session.user;

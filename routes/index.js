@@ -19,6 +19,8 @@ router.get("/login", loginController.loginPageGET);
 router.post("/login", loginController.loginAuthenticate);
 // Add Video Page GET
 router.get("/add", addVideoController.addPageGET);
+// POST new video
+router.post("/add", addVideoController.createVideo);
 /* Logout - To do
 router.get("/logout", function(req, res) {
   res.logout();
