@@ -11,6 +11,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const localMongoose = require("passport-local-mongoose");
 const flash = require("connect-flash");
 const app = express();
+const request = require("request"); // "Request" library
+const querystring = require("querystring");
 
 //models
 require("./models/video.js");
@@ -39,7 +41,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(__dirname + "public"));
 app.use("/", index);
 
 // passport
