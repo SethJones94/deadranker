@@ -43,8 +43,10 @@ const config = {
     App: "./app.js"
   },
   devtool: "source-map",
+  target: "node",
+  externals: [nodeExternals()],
   output: {
-    path: path.resolve(__dirname, "public", "dist"),
+    path: path.resolve(__dirname, "./dist"),
     filename: "[name].bundle.js"
   },
   module: {
